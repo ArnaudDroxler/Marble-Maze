@@ -65,13 +65,13 @@ public class Ball {
     }
 
     public RectF putXAndY(float pX, float pY) {
-        speedX += pX / COMPENSATEUR;
+        speedX += (pX-0.28) / COMPENSATEUR;
         if(speedX > MAX_SPEED)
             speedX = MAX_SPEED;
         if(speedX < -MAX_SPEED)
             speedX = -MAX_SPEED;
 
-        speedY += pY / COMPENSATEUR;
+        speedY += (pY-0.18) / COMPENSATEUR;
         if(speedY > MAX_SPEED)
             speedY = MAX_SPEED;
         if(speedY < -MAX_SPEED)

@@ -36,6 +36,9 @@ public class MazzeEngine {
         public void onSensorChanged(SensorEvent pEvent) {
             float x = pEvent.values[0];
             float y = pEvent.values[1];
+            float z = pEvent.values[2];
+
+            Log.d("Accelerometre","X: " + x + " Y: " + y + " Z: " + z);
 
            if (ball != null) {
                 RectF hitBox = ball.putXAndY(x,y);
