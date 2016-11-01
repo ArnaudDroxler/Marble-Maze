@@ -15,9 +15,9 @@ public class Ball {
     private float speedX = 0.0f;
     private float speedY = 0.0f;
 
-    private int color = Color.GREEN;
+    private int color = Color.YELLOW;
 
-    public static final int RAYON = 10;
+    public static final int RAYON = 50;
     private static final float MAX_SPEED = 20.0f;
     private static final float COMPENSATEUR = 8.0f;
     private static final float REBOND = 1.75f;
@@ -93,13 +93,13 @@ public class Ball {
     }
 
     public RectF putXAndY(float pX, float pY) {
-        speedX += pX / COMPENSATEUR;
+        speedX += (pX-0.28) / COMPENSATEUR;
         if(speedX > MAX_SPEED)
             speedX = MAX_SPEED;
         if(speedX < -MAX_SPEED)
             speedX = -MAX_SPEED;
 
-        speedY += pY / COMPENSATEUR;
+        speedY += (pY-0.18) / COMPENSATEUR;
         if(speedY > MAX_SPEED)
             speedY = MAX_SPEED;
         if(speedY < -MAX_SPEED)
