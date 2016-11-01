@@ -15,9 +15,12 @@ public class Ball {
     private float speedX = 0.0f;
     private float speedY = 0.0f;
 
+    private int mHeight = -1;
+    private int mWidth = -1;
+
     private int color = Color.YELLOW;
 
-    public static final int RAYON = 50;
+    public static final int RAYON = 40;
     private static final float MAX_SPEED = 20.0f;
     private static final float COMPENSATEUR = 8.0f;
     private static final float REBOND = 1.75f;
@@ -26,19 +29,8 @@ public class Ball {
 
     private RectF initialPos = null;
 
-    public int getColor(){
-        return this.color;
-    }
     public Ball() {
         colliderBox = new RectF();
-    }
-
-    public float getX() {
-        return posX;
-    }
-
-    public float getY() {
-        return posY;
     }
 
     public void setPosX(float pPosX) {
@@ -65,26 +57,6 @@ public class Ball {
             speedX = -speedX / REBOND;
         }
     }
-
-    public void changeXSpeed() {
-        speedX = -speedX;
-    }
-
-    public void changeYSpeed() {
-        speedY = -speedY;
-    }
-
-    private int mHeight = -1;
-    public void setHeight(int pHeight) {
-        this.mHeight = pHeight;
-    }
-
-    // Taille de l'�cran en largeur
-    private int mWidth = -1;
-    public void setWidth(int pWidth) {
-        this.mWidth = pWidth;
-    }
-
 
     public void setInitialRectangle(RectF initialRectangle) {
         this.initialPos = initialRectangle;
@@ -120,4 +92,33 @@ public class Ball {
         this.posX = initialPos.left + RAYON;
         this.posY = initialPos.top + RAYON;
     }
+
+    public int getColor(){
+        return this.color;
+    }
+
+    public float getX() {
+        return posX;
+    }
+
+    public float getY() {
+        return posY;
+    }
+
+    public void changeXSpeed() {
+        speedX = -speedX;
+    }
+
+    public void changeYSpeed() {
+        speedY = -speedY;
+    }
+
+    public void setHeight(int pHeight) {
+        this.mHeight = pHeight;
+    }
+
+    public void setWidth(int pWidth) {
+        this.mWidth = pWidth;
+    }
+
 }

@@ -38,7 +38,7 @@ public class MazzeEngine {
             float y = pEvent.values[1];
 
            if (ball != null) {
-                RectF hitBox = ball.putXAndY(y, -x);
+                RectF hitBox = ball.putXAndY(x,y);
 
                 for (Block block : blocks) {
 
@@ -48,6 +48,7 @@ public class MazzeEngine {
                             case WALL:
                                 //mActivity.showDialog(MazzeActivity.DEFEAT_DIALOG);
                                 Log.i("MazzeEngine","Perdu");
+                                ball.reset();
                                 break;
 
                             case START:
