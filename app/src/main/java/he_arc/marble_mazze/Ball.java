@@ -15,9 +15,9 @@ public class Ball {
     private float speedX = 0.0f;
     private float speedY = 0.0f;
 
-    private int color = Color.GREEN;
+    private int color = Color.YELLOW;
 
-    public static final int RAYON = 10;
+    public static final int RAYON = 50;
     private static final float MAX_SPEED = 20.0f;
     private static final float COMPENSATEUR = 8.0f;
     private static final float REBOND = 1.75f;

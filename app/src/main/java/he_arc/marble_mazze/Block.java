@@ -10,7 +10,7 @@ public class Block {
 
     enum  Type {WALL,HOLE,START,END};
 
-    private float SIZE = Ball.RAYON * 2; //TO define
+    private float SIZE = Ball.RAYON * 2;
 
     private Type mType = null;
     private RectF mRectangle = null;
