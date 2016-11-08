@@ -71,6 +71,9 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
                     case WALL:
                         mPaint.setColor(Color.BLACK);
                         break;
+                    case HOLE:
+                        mPaint.setColor(Color.YELLOW);
+                        break;
                 }
                 pCanvas.drawRect(b.getRectangle(), mPaint);
             }

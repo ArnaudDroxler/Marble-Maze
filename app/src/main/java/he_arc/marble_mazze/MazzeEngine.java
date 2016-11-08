@@ -38,8 +38,6 @@ public class MazzeEngine {
             float y = pEvent.values[1];
             float z = pEvent.values[2];
 
-            Log.d("Accelerometre","X: " + x + " Y: " + y + " Z: " + z);
-
            if (ball != null) {
                 RectF hitBox = ball.putXAndY(x,y);
 
@@ -50,13 +48,26 @@ public class MazzeEngine {
                         switch (block.getType()) {
                             case WALL:
                                 //mActivity.showDialog(MazzeActivity.DEFEAT_DIALOG);
-                                Log.i("MazzeEngine","Perdu");
-                                ball.reset();
-                                break;
+                                //Log.i("MazzeEngine","Toucher Wall");
+                                //ball.rebond(block);
+                                Log.i("Balle","posX: "+ ball.getX() + " posY: " + ball.getY());
+                                Log.i("Bloc", "centerX(): "+inter.centerY() + " centerY(): "+inter.centerY());
+                                if(ball.getRayon() > inter.centerX()-ball.getX()){
+                                    Log.i("Balle", "ChangementSpeedY");
+                                    ball.changeYSpeed();
+                                } else if(ball.getRayon() > inter.centerY()-ball.getY()) {
+                                    Log.i("Balle", "ChangementSpeedX");
+                                    ball.changeXSpeed();
+                                }
 
+                                break;
+                            case HOLE:
+                                //ball.reset();
+                                //ball.rebond(block);
+                                //Log.i("MazzeEngine","Perdu");
+                                break;
                             case START:
                                 break;
-
                             case END:
                                 //mActivity.showDialog(MazzeActivity.VICTORY_DIALOG);
                                 Log.i("MazzeEngine","Gagne");

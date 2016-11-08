@@ -2,6 +2,7 @@ package he_arc.marble_mazze;
 
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.util.Log;
 
 /**
  * Created by Arnaud on 25.10.2016.
@@ -29,6 +30,9 @@ public class Ball {
 
     private RectF initialPos = null;
 
+    private float oldPosX;
+    private float oldPosY;
+
     public Ball() {
         colliderBox = new RectF();
     }
@@ -45,6 +49,7 @@ public class Ball {
             posX = mWidth - RAYON;
             speedY = -speedY / REBOND;
         }
+        oldPosX = posX;
     }
 
     public void setPosY(float pPosY) {
@@ -56,6 +61,20 @@ public class Ball {
             posY = mHeight - RAYON;
             speedX = -speedX / REBOND;
         }
+        oldPosY = posY;
+    }
+
+    public void rebondX()
+    {
+        speedX = -speedX / REBOND;
+    }
+    public void rebondY()
+    {
+        speedY = -speedY / REBOND;
+    }
+    public int getRayon()
+    {
+        return RAYON;
     }
 
     public void setInitialRectangle(RectF initialRectangle) {
