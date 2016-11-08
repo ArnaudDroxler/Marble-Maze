@@ -20,9 +20,9 @@ public class Ball {
 
     private int color = Color.YELLOW;
 
-    public static final int RAYON = 40;
+    public static final int RAYON = 20;
     private static final float MAX_SPEED = 20.0f;
-    private static final float COMPENSATEUR = 8.0f;
+    private static final float COMPENSATEUR = 15.0f;
     private static final float REBOND = 1.75f;
 
     private RectF colliderBox = null;
