@@ -35,7 +35,6 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
 
-        ball = new Ball();
     }
 
     public void setBall(Ball ball) {
@@ -63,19 +62,21 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
             for(Block b : blocks) {
                 switch(b.getType()) {
                     case START:
-                        mPaint.setColor(Color.WHITE);
+                        mPaint.setColor(Color.BLUE);
                         break;
                     case END:
-                        mPaint.setColor(Color.RED);
+                        mPaint.setColor(Color.GREEN);
                         break;
                     case WALL:
                         mPaint.setColor(Color.BLACK);
                         break;
                     case HOLE:
-                        mPaint.setColor(Color.YELLOW);
+                        mPaint.setColor(Color.RED);
                         break;
                 }
-                pCanvas.drawRect(b.getRectangle(), mPaint);
+                pCanvas.drawRect(b.getRectangle().left, b.getRectangle().top,b.getRectangle().right,b.getRectangle().bottom,mPaint);
+
+                //pCanvas.drawRect(b.getRectangle(), mPaint);
             }
         }
 

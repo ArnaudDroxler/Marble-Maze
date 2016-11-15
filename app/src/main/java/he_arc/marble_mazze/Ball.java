@@ -21,7 +21,7 @@ public class Ball {
 
     private int color = Color.YELLOW;
 
-    public static final int RAYON = 20;
+    public static int RAYON = 27;
     private static final float MAX_SPEED = 20.0f;
     private static final float COMPENSATEUR = 15.0f;
     private static final float REBOND = 1.75f;
@@ -33,7 +33,8 @@ public class Ball {
     private float oldPosX;
     private float oldPosY;
 
-    public Ball() {
+    public Ball(int size){
+        RAYON = size;
         colliderBox = new RectF();
     }
 
