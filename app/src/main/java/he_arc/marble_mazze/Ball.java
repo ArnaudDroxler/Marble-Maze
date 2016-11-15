@@ -21,10 +21,12 @@ public class Ball {
 
     private int color = Color.YELLOW;
 
-    public static final int RAYON = 20;
-    private static final float MAX_SPEED = 5.0f;
+
+    public static int RAYON = 27;
+    private static final float MAX_SPEED = 10.0f;
+
     private static final float COMPENSATEUR = 15.0f;
-    private static final float REBOND = 1.25f;
+    private static final float REBOND = 1.05f;
     //private static final float REBOND = 1000.75f; Pour avoir des murs collants
 
     private RectF colliderBox = null;
@@ -34,7 +36,8 @@ public class Ball {
     private float oldPosX;
     private float oldPosY;
 
-    public Ball() {
+    public Ball(int size){
+        RAYON = size;
         colliderBox = new RectF();
     }
 

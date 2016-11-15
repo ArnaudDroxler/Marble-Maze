@@ -5,12 +5,14 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.view.Display;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,13 @@ public class MazzeEngine {
     private Sensor mAccelerometre = null;
     private List<Block> blocks = null;
 
+
     public MazzeEngine(MazzeActivity mActivity) {
         this.mActivity = mActivity;
         mManager = (SensorManager) mActivity.getBaseContext().getSystemService(Service.SENSOR_SERVICE);
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+
     }
 
 
@@ -65,7 +70,7 @@ public class MazzeEngine {
                                 }
                                 break;
                             case HOLE:
-                                //ball.reset();
+                                ball.reset();
                                 //ball.rebond(block);
                                 //Log.i("MazzeEngine","Perdu");
                                 break;
@@ -100,27 +105,23 @@ public class MazzeEngine {
         mManager.registerListener(mSensorEventListener, mAccelerometre, SensorManager.SENSOR_DELAY_GAME);
     }
 
-    public List<Block> buildMazze() {
+    public List<Block> buildMazze(Bitmap imageToParse, int offset) {
         blocks = new ArrayList<Block>();
-
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inScaled = false;
-        Bitmap imageToParse = BitmapFactory.decodeResource(mActivity.getResources(),R.drawable.map,opts);
 
         for (int y = 0; y < imageToParse.getHeight(); y++) {
             for (int x = 0; x < imageToParse.getWidth(); x++) {
                 int rgb = imageToParse.getPixel(x, y);
                 if (rgb == Color.BLACK) {
-                    blocks.add(new Block(Block.Type.WALL, x,y));
+                    blocks.add(new Block(Block.Type.WALL, x+offset,y));
                 }
                 else if(rgb == Color.RED){
-                    blocks.add(new Block(Block.Type.HOLE, x,y));
+                    blocks.add(new Block(Block.Type.HOLE, x+offset,y));
                 }
                 else if(rgb == Color.BLUE){
-                    blocks.add(new Block(Block.Type.END, x,y));
+                    blocks.add(new Block(Block.Type.END, x+offset,y));
                 }
                 else if(rgb == Color.GREEN){
-                    Block b = new Block(Block.Type.START, x,y);
+                    Block b = new Block(Block.Type.START, x+offset,y);
                     ball.setInitialRectangle(new RectF(b.getRectangle()));
                     blocks.add(b);
                 }
