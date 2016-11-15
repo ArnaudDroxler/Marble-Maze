@@ -22,9 +22,10 @@ public class Ball {
     private int color = Color.YELLOW;
 
     public static final int RAYON = 20;
-    private static final float MAX_SPEED = 20.0f;
+    private static final float MAX_SPEED = 5.0f;
     private static final float COMPENSATEUR = 15.0f;
-    private static final float REBOND = 1.75f;
+    private static final float REBOND = 1.25f;
+    //private static final float REBOND = 1000.75f; Pour avoir des murs collants
 
     private RectF colliderBox = null;
 
@@ -35,6 +36,10 @@ public class Ball {
 
     public Ball() {
         colliderBox = new RectF();
+    }
+
+    public RectF getRectangle(){
+        return colliderBox;
     }
 
     public void setPosX(float pPosX) {
@@ -66,11 +71,13 @@ public class Ball {
 
     public void rebondX()
     {
-        speedX = -speedX / REBOND;
+        //speedX = -speedX / REBOND;
+        speedX = -speedX ;
     }
     public void rebondY()
     {
-        speedY = -speedY / REBOND;
+        //speedY = -speedY / REBOND;
+        speedY = -speedY;
     }
     public int getRayon()
     {

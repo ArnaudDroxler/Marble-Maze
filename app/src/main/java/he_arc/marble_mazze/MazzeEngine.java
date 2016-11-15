@@ -53,17 +53,16 @@ public class MazzeEngine {
                             case WALL:
                                 //mActivity.showDialog(MazzeActivity.DEFEAT_DIALOG);
                                 //Log.i("MazzeEngine","Toucher Wall");
-                                //ball.rebond(block);
-                                Log.i("Balle","posX: "+ ball.getX() + " posY: " + ball.getY());
-                                Log.i("Bloc", "centerX(): "+inter.centerY() + " centerY(): "+inter.centerY());
-                                if(ball.getRayon() > inter.centerX()-ball.getX()){
-                                    Log.i("Balle", "ChangementSpeedY");
-                                    ball.changeYSpeed();
-                                } else if(ball.getRayon() > inter.centerY()-ball.getY()) {
-                                    Log.i("Balle", "ChangementSpeedX");
-                                    ball.changeXSpeed();
+                                Log.i("Bloc", "blocTop: " + inter.top + " blocLeft: " + inter.left + " blocBottom: " + inter.bottom + " blocRight: " + inter.right+ " blocCenterX: " + inter.centerX() + " blocCenterY: " + inter.centerY());
+                                if((inter.right-inter.left)<(inter.bottom-inter.top)){
+                                    ball.rebondY();
+                                } else if((inter.right-inter.left)>(inter.bottom-inter.top)){
+                                    ball.rebondX();
                                 }
-
+                                else {
+                                    ball.rebondX();
+                                    ball.rebondY();
+                                }
                                 break;
                             case HOLE:
                                 //ball.reset();
