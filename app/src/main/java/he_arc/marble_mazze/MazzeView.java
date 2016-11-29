@@ -90,7 +90,6 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         mThread.keepDrawing = true;
         mThread.start();
-        // Quand on cr�e la boule, on lui indique les coordonn�es de l'�cran
         if(ball != null ) {
             this.ball.setHeight(getHeight());
             this.ball.setWidth(getWidth());
@@ -133,7 +132,6 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
                         mSurfaceHolder.unlockCanvasAndPost(canvas);
                 }
 
-                // Pour dessiner � 50 fps
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {}

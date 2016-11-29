@@ -69,6 +69,8 @@ public class MazzeActivity extends AppCompatActivity {
 
         List<Block> mList = mEngine.buildMazze(imageToParse,offset);
         mView.setBlocks(mList);
+
+        ball.reset();
     }
 
     @Override
