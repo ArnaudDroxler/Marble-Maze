@@ -79,12 +79,16 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
                 pCanvas.drawRect(b.getRectangle(), mPaint);
             }
         }
-
         // Dessiner la boule
         if(ball != null) {
             mPaint.setColor(ball.getColor());
             pCanvas.drawCircle(ball.getX(), ball.getY(), ball.RAYON, mPaint);
         }
+        mPaint.setColor(Color.RED);
+        for (int i = 0; i<ball.vie; i++){
+            pCanvas.drawCircle(50,50+i*80,40,mPaint);
+        }
+
     }
 
 

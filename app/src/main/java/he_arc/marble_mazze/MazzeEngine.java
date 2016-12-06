@@ -31,8 +31,6 @@ public class MazzeEngine {
     private Sensor mAccelerometre = null;
     private List<Block> blocks = null;
     private Vibrator vibrator;
-    private int vie;
-
 
     public MazzeEngine(MazzeActivity mActivity) {
         this.mActivity = mActivity;
@@ -40,7 +38,6 @@ public class MazzeEngine {
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
-        vie = 3;
     }
 
 
@@ -73,7 +70,7 @@ public class MazzeEngine {
                                 }
                                 break;
                             case HOLE:
-                                vie--;
+                                ball.vie--;
                                 ball.reset();
                                 break;
                             case START:
@@ -82,11 +79,12 @@ public class MazzeEngine {
                                 Log.i("MazzeEngine","Gagne");
                                 break;
                         }
-                        if(vie == 0){
-                            Log.i("MazzeEngine","Perdu");
-                        }
+                        break;
                     }
                 }
+               if(ball.vie == 0){
+                   Log.i("MazzeEngine","Perdu");
+               }
            }
         }
 

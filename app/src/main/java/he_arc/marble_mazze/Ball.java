@@ -21,7 +21,7 @@ public class Ball {
 
     private int color = Color.YELLOW;
 
-
+    public int vie = 3;
     public static int RAYON = 27;
     private static final float MAX_SPEED = 10.0f;
 
