@@ -11,8 +11,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ public class MazzeEngine {
     private SensorManager mManager = null;
     private Sensor mAccelerometre = null;
     private List<Block> blocks = null;
+    private Vibrator vibrator;
+    private int vie;
 
 
     public MazzeEngine(MazzeActivity mActivity) {
@@ -35,7 +39,8 @@ public class MazzeEngine {
         mManager = (SensorManager) mActivity.getBaseContext().getSystemService(Service.SENSOR_SERVICE);
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-
+        vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
+        vie = 3;
     }
 
 
@@ -56,8 +61,7 @@ public class MazzeEngine {
                     if (inter.intersect(hitBox)) {
                         switch (block.getType()) {
                             case WALL:
-                                //mActivity.showDialog(MazzeActivity.DEFEAT_DIALOG);
-                                //Log.i("MazzeEngine","Toucher Wall");
+                                vibrator.vibrate(50);
                                 if((inter.right-inter.left)<(inter.bottom-inter.top)){
                                     ball.rebondY();
                                 } else if((inter.right-inter.left)>(inter.bottom-inter.top)){
@@ -69,17 +73,18 @@ public class MazzeEngine {
                                 }
                                 break;
                             case HOLE:
+                                vie--;
                                 ball.reset();
-                                //Log.i("MazzeEngine","Perdu");
                                 break;
                             case START:
                                 break;
                             case END:
-                                //mActivity.showDialog(MazzeActivity.VICTORY_DIALOG);
                                 Log.i("MazzeEngine","Gagne");
                                 break;
                         }
-                        break;
+                        if(vie == 0){
+                            Log.i("MazzeEngine","Perdu");
+                        }
                     }
                 }
            }
