@@ -61,33 +61,25 @@ public class MazzeEngine {
                                 vibrator.vibrate(50);
                                 if((inter.right-inter.left)<(inter.bottom-inter.top)){
                                     ball.rebondY();
-                                    //On replace la balle au bord du mur (A modifier car transforme le rect au lieu de déplacer)
+                                    //On replace la balle au bord du mur
                                     if(ball.getRectangle().left==inter.left)
                                     {
-                                        //ball.getRectangle().left = inter.right;
                                         ball.replaceLeft(inter.right);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else
                                     {
-                                        //ball.getRectangle().right = inter.left;
                                         ball.replaceRight(inter.left);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                 } else if((inter.right-inter.left)>(inter.bottom-inter.top)){
                                     ball.rebondX();
                                     //On replace la balle au bord du mur (A modifier)
                                     if(inter.bottom == ball.getRectangle().bottom)
                                     {
-                                        //ball.getRectangle().bottom =inter.top;
                                         ball.replaceBottom(inter.top);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else
                                     {
-                                        //ball.getRectangle().top = inter.bottom;
                                         ball.replaceTop(inter.bottom);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                 }
                                 else {
@@ -96,35 +88,25 @@ public class MazzeEngine {
                                     //On replace la balle au bord du mur (A modifier)
                                     if(inter.left == ball.getRectangle().left && inter.top == ball.getRectangle().top)
                                     {
-                                        //ball.getRectangle().left = inter.right;
+
                                         ball.replaceLeft(inter.right);
-                                        //ball.getRectangle().top = inter.bottom;
+
                                         ball.replaceTop(inter.bottom);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else if(inter.left == ball.getRectangle().left && inter.bottom == ball.getRectangle().bottom)
                                     {
-                                        //ball.getRectangle().left = inter.right;
                                         ball.replaceLeft(inter.right);
-                                        //ball.getRectangle().bottom = inter.top;
                                         ball.replaceBottom(inter.top);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else if(inter.right == ball.getRectangle().right && inter.top == ball.getRectangle().top)
                                     {
-                                        //ball.getRectangle().right = inter.left;
                                         ball.replaceRight(inter.left);
-                                        //ball.getRectangle().top = inter.bottom;
                                         ball.replaceTop(inter.bottom);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else if(inter.right == ball.getRectangle().right && inter.bottom == ball.getRectangle().bottom)
                                     {
-                                        //ball.getRectangle().right = inter.left;
                                         ball.replaceRight(inter.left);
-                                        //ball.getRectangle().bottom = inter.top;
                                         ball.replaceBottom(inter.top);
-                                        Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
 
                                 }

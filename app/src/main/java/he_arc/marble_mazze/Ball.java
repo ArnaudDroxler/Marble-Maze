@@ -23,7 +23,7 @@ public class Ball {
 
     public int vie = 3;
     public static int RAYON = 27;
-    private static final float MAX_SPEED = 10.0f;
+    private static final float MAX_SPEED = 20.0f;
 
     private static final float COMPENSATEUR = 15.0f;
     private static final float REBOND = 1.05f;
@@ -74,13 +74,13 @@ public class Ball {
 
     public void rebondX()
     {
-        //speedX = -speedX / REBOND;
-        speedX = -speedX ;
+        speedX = -speedX / REBOND;
+        //speedX = -speedX ;
     }
     public void rebondY()
     {
-        //speedY = -speedY / REBOND;
-        speedY = -speedY;
+        speedY = -speedY / REBOND;
+        //speedY = -speedY;
     }
     public int getRayon()
     {
