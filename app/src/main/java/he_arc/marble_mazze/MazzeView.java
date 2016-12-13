@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -17,6 +18,7 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
 
     private Ball ball = null;
     private List<Block> blocks = null;
+
 
     SurfaceHolder mSurfaceHolder;
     DrawingThread mThread;
@@ -90,7 +92,6 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         mThread.keepDrawing = true;
         mThread.start();
-        // Quand on cr�e la boule, on lui indique les coordonn�es de l'�cran
         if(ball != null ) {
             this.ball.setHeight(getHeight());
             this.ball.setWidth(getWidth());
@@ -120,6 +121,7 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
         @Override
         public void run() {
             Canvas canvas;
+            ball.reset();
             while (keepDrawing) {
                 canvas = null;
 
@@ -133,7 +135,6 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
                         mSurfaceHolder.unlockCanvasAndPost(canvas);
                 }
 
-                // Pour dessiner à 60 fps
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {}

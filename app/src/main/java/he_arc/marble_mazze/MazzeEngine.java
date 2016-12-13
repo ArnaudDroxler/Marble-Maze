@@ -11,8 +11,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ public class MazzeEngine {
     private SensorManager mManager = null;
     private Sensor mAccelerometre = null;
     private List<Block> blocks = null;
+    private Vibrator vibrator;
+    private int vie;
 
 
     public MazzeEngine(MazzeActivity mActivity) {
@@ -35,7 +39,8 @@ public class MazzeEngine {
         mManager = (SensorManager) mActivity.getBaseContext().getSystemService(Service.SENSOR_SERVICE);
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-
+        vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
+        vie = 3;
     }
 
 
@@ -56,23 +61,20 @@ public class MazzeEngine {
                     if (inter.intersect(hitBox)) {
                         switch (block.getType()) {
                             case WALL:
-                                //mActivity.showDialog(MazzeActivity.DEFEAT_DIALOG);
-                                //Log.i("MazzeEngine","Toucher Wall");
+                                vibrator.vibrate(50);
                                 if((inter.right-inter.left)<(inter.bottom-inter.top)){
                                     ball.rebondY();
                                     //On replace la balle au bord du mur (A modifier car transforme le rect au lieu de déplacer)
                                     if(ball.getRectangle().left==inter.left)
                                     {
                                         //ball.getRectangle().left = inter.right;
-                                        //ball.replaceLeft(inter.right);
-                                        ball.replaceX(inter.right);
+                                        ball.replaceLeft(inter.right);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else
                                     {
                                         //ball.getRectangle().right = inter.left;
-                                        //ball.replaceRight(inter.left);
-                                        ball.replaceX(inter.left);
+                                        ball.replaceRight(inter.left);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                 } else if((inter.right-inter.left)>(inter.bottom-inter.top)){
@@ -81,15 +83,13 @@ public class MazzeEngine {
                                     if(inter.bottom == ball.getRectangle().bottom)
                                     {
                                         //ball.getRectangle().bottom =inter.top;
-                                        //ball.replaceBottom(inter.top);
-                                        ball.replaceY(inter.top);
+                                        ball.replaceBottom(inter.top);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else
                                     {
                                         //ball.getRectangle().top = inter.bottom;
-                                        //ball.replaceTop(inter.bottom);
-                                        ball.replaceY(inter.bottom);
+                                        ball.replaceTop(inter.bottom);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                 }
@@ -99,43 +99,52 @@ public class MazzeEngine {
                                     //On replace la balle au bord du mur (A modifier)
                                     if(inter.left == ball.getRectangle().left && inter.top == ball.getRectangle().top)
                                     {
-                                        ball.getRectangle().left = inter.right;
-                                        ball.getRectangle().top = inter.bottom;
+                                        //ball.getRectangle().left = inter.right;
+                                        ball.replaceLeft(inter.right);
+                                        //ball.getRectangle().top = inter.bottom;
+                                        ball.replaceTop(inter.bottom);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else if(inter.left == ball.getRectangle().left && inter.bottom == ball.getRectangle().bottom)
                                     {
-                                        ball.getRectangle().left = inter.right;
-                                        ball.getRectangle().bottom = inter.top;
+                                        //ball.getRectangle().left = inter.right;
+                                        ball.replaceLeft(inter.right);
+                                        //ball.getRectangle().bottom = inter.top;
+                                        ball.replaceBottom(inter.top);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else if(inter.right == ball.getRectangle().right && inter.top == ball.getRectangle().top)
                                     {
-                                        ball.getRectangle().right = inter.left;
-                                        ball.getRectangle().top = inter.bottom;
+                                        //ball.getRectangle().right = inter.left;
+                                        ball.replaceRight(inter.left);
+                                        //ball.getRectangle().top = inter.bottom;
+                                        ball.replaceTop(inter.bottom);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
                                     else if(inter.right == ball.getRectangle().right && inter.bottom == ball.getRectangle().bottom)
                                     {
-                                        ball.getRectangle().right = inter.left;
-                                        ball.getRectangle().bottom = inter.top;
+                                        //ball.getRectangle().right = inter.left;
+                                        ball.replaceRight(inter.left);
+                                        //ball.getRectangle().bottom = inter.top;
+                                        ball.replaceBottom(inter.top);
                                         Log.i("Balle", "Left: " + ball.getRectangle().left + " Right: "+ ball.getRectangle().right + " Bottom: "+ ball.getRectangle().bottom + " Top: " + ball.getRectangle().top);
                                     }
 
                                 }
                                 break;
                             case HOLE:
+                                vie--;
                                 ball.reset();
-                                //Log.i("MazzeEngine","Perdu");
                                 break;
                             case START:
                                 break;
                             case END:
-                                //mActivity.showDialog(MazzeActivity.VICTORY_DIALOG);
                                 Log.i("MazzeEngine","Gagne");
                                 break;
                         }
-                        break;
+                        if(vie == 0){
+                            Log.i("MazzeEngine","Perdu");
+                        }
                     }
                 }
            }
