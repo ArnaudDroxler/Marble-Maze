@@ -112,8 +112,31 @@ public class MazzeEngine {
                                 }
                                 break;
                             case HOLE:
-                                ball.vie--;
-                                ball.reset();
+                                if((inter.right-inter.left)<(inter.bottom-inter.top)){
+                                   //Tape côté
+                                    if(inter.right-inter.left >= ball.getRayon())
+                                    {
+                                        //Si la balle a plus de la moitié dans la zone, on perd une vie et reset la pos
+                                        ball.vie--;
+                                        ball.reset();
+                                    }
+                                } else if((inter.right-inter.left)>(inter.bottom-inter.top)){
+                                  //Tape dessus/dessous
+                                    if(inter.bottom-inter.top >= ball.getRayon())
+                                    {
+                                        //Si la balle a plus de la moitié dans la zone, on perd une vie et reset la pos
+                                        ball.vie--;
+                                        ball.reset();
+                                    }
+                                }
+                                else {
+                                    //Arrive depuis le coin
+                                    if(Math.sqrt(Math.pow(inter.right-inter.left,2)+Math.pow(inter.bottom-inter.top,2)) >= Math.sqrt(2* Math.pow(ball.getRayon(),2))){
+                                        //Si la balle a plus de la moitié dans la zone, on perd une vie et reset la pos
+                                        ball.vie--;
+                                        ball.reset();
+                                    }
+                                }
                                 break;
                             case START:
                                 break;
