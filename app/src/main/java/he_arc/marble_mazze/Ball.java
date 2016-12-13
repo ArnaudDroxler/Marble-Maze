@@ -122,6 +122,31 @@ public class Ball {
         this.posY = initialPos.top + RAYON;
     }
 
+    public void replaceLeft(float pos){
+        this.posX = (pos+RAYON+(float)0.01);
+        // Met � jour les coordonn�es du rectangle de collision
+        colliderBox.set(posX - RAYON, posY - RAYON, posX + RAYON, posY + RAYON);
+    }
+
+    public void replaceRight(float pos){
+        this.posX = (pos-(RAYON +(float)0.01));
+        // Met � jour les coordonn�es du rectangle de collision
+        colliderBox.set(posX - RAYON, posY - RAYON, posX + RAYON, posY + RAYON);
+    }
+
+    public void replaceTop(float pos){
+        this.posY = (pos+RAYON +(float)0.01);
+        // Met � jour les coordonn�es du rectangle de collision
+        colliderBox.set(posX - RAYON, posY - RAYON, posX + RAYON, posY + RAYON);
+    }
+
+    public void replaceBottom(float pos){
+        this.posY = (pos-(RAYON +(float)0.01));
+        // Met � jour les coordonn�es du rectangle de collision
+        colliderBox.set(posX - RAYON, posY - RAYON, posX + RAYON, posY + RAYON);
+    }
+
+
     public int getColor(){
         return this.color;
     }
