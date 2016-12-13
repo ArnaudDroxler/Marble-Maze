@@ -133,7 +133,7 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
                         mSurfaceHolder.unlockCanvasAndPost(canvas);
                 }
 
-                // Pour dessiner � 50 fps
+                // Pour dessiner à 60 fps
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {}
