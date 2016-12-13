@@ -31,8 +31,6 @@ public class MazzeEngine {
     private Sensor mAccelerometre = null;
     private List<Block> blocks = null;
     private Vibrator vibrator;
-    private int vie;
-
 
     public MazzeEngine(MazzeActivity mActivity) {
         this.mActivity = mActivity;
@@ -40,7 +38,6 @@ public class MazzeEngine {
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
-        vie = 3;
     }
 
 
@@ -138,7 +135,7 @@ public class MazzeEngine {
                                     if(inter.right-inter.left >= ball.getRayon())
                                     {
                                         //Si la balle a plus de la moitié dans la zone, on perd une vie et reset la pos
-                                        vie--;
+                                        ball.vie--;
                                         ball.reset();
                                     }
                                 } else if((inter.right-inter.left)>(inter.bottom-inter.top)){
@@ -146,7 +143,7 @@ public class MazzeEngine {
                                     if(inter.bottom-inter.top >= ball.getRayon())
                                     {
                                         //Si la balle a plus de la moitié dans la zone, on perd une vie et reset la pos
-                                        vie--;
+                                        ball.vie--;
                                         ball.reset();
                                     }
                                 }
@@ -154,11 +151,10 @@ public class MazzeEngine {
                                     //Arrive depuis le coin
                                     if(Math.sqrt(Math.pow(inter.right-inter.left,2)+Math.pow(inter.bottom-inter.top,2)) >= Math.sqrt(2* Math.pow(ball.getRayon(),2))){
                                         //Si la balle a plus de la moitié dans la zone, on perd une vie et reset la pos
-                                        vie--;
+                                        ball.vie--;
                                         ball.reset();
                                     }
                                 }
-
                                 break;
                             case START:
                                 break;
@@ -166,11 +162,12 @@ public class MazzeEngine {
                                 Log.i("MazzeEngine","Gagne");
                                 break;
                         }
-                        if(vie == 0){
-                            Log.i("MazzeEngine","Perdu");
-                        }
+                        break;
                     }
                 }
+               if(ball.vie == 0){
+                   Log.i("MazzeEngine","Perdu");
+               }
            }
         }
 
