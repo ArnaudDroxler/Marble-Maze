@@ -14,6 +14,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class MazzeActivity extends AppCompatActivity {
@@ -35,10 +39,29 @@ public class MazzeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
+
+        try {
+            //essaye d'ouvrir le fichier de sauvegarde du programme
+            FileInputStream fin = getApplicationContext().openFileInput("MM_save");
+            fin.close();
+        } catch (FileNotFoundException e) {
+            try {
+                //S'il n'existe pas, on le créé
+                FileOutputStream fos = getApplicationContext().openFileOutput("MM_save", Context.MODE_PRIVATE);
+                fos.write("".getBytes());
+                fos.close();
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
 
         //Désactiver le mode veille
