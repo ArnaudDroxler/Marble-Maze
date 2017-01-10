@@ -39,18 +39,6 @@ public class MazzeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Pour débug, vider le fichier de sauvegarde
-        try {
-            //S'il n'existe pas, on le créé
-            FileOutputStream fos = getApplicationContext().openFileOutput("MM_save", Context.MODE_PRIVATE);
-            fos.write("".getBytes());
-            fos.close();
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-
         try {
             //essaye d'ouvrir le fichier de sauvegarde du programme
             FileInputStream fin = getApplicationContext().openFileInput("MM_save");

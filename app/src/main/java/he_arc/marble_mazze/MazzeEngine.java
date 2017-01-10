@@ -173,6 +173,7 @@ public class MazzeEngine {
                                     e.printStackTrace();
                                 }
                                 Log.i("content", content);
+                                Log.i("ScoreNiveau", scoreNiveau);
                                 //Séparation de la string: 1 token par niveau
                                 StringTokenizer tokensNiveaux = new StringTokenizer(content, "|");
                                 content="";
@@ -220,13 +221,16 @@ public class MazzeEngine {
                                     e.printStackTrace();
                                 }
                                 content ="";
+
+
                                 //Pour debug
                                 scoreNiveau = (Integer.parseInt(scoreNiveau)+1)+"";
                                 if(scoreNiveau.equals("3")){
-                                    nomNiveau = "niveau2";
+                                    setNomNiveau("niveau2");
                                 }
-                                ball.reset();
 
+
+                                ball.reset();
                                 break;
                         }
                         break;
@@ -243,6 +247,8 @@ public class MazzeEngine {
 
         }
     };
+
+    public void setNomNiveau(String nom){this.nomNiveau = nom;}
 
     public void setBall(Ball ball) {
         this.ball = ball;
