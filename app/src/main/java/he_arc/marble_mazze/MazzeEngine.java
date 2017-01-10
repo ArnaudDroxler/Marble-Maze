@@ -1,11 +1,8 @@
 package he_arc.marble_mazze;
 
 import android.app.Service;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.RectF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,8 +10,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.Display;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +136,7 @@ public class MazzeEngine {
                             case START:
                                 break;
                             case END:
+                                mActivity.EndGame(true);
                                 Log.i("MazzeEngine","Gagne");
                                 break;
                         }
@@ -149,6 +145,7 @@ public class MazzeEngine {
                 }
                if(ball.vie == 0){
                    Log.i("MazzeEngine","Perdu");
+                   mActivity.EndGame(false);
                }
            }
         }

@@ -2,7 +2,6 @@ package he_arc.marble_mazze;
 
 import android.graphics.Color;
 import android.graphics.RectF;
-import android.util.Log;
 
 /**
  * Created by Arnaud on 25.10.2016.

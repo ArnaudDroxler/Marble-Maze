@@ -1,15 +1,15 @@
 package he_arc.marble_mazze;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -35,8 +35,11 @@ public class MazzeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
 
         //Désactiver le mode veille
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
@@ -59,7 +62,6 @@ public class MazzeActivity extends AppCompatActivity {
         ratio = (screenHeight/mapHeight);
         offset = ( Math.abs(screenWidth - mapWidth*ratio)/2)/ratio;
 
-        Log.i("Ac","" + offset);
         mView = new MazzeView(this);
         setContentView(mView);
 
@@ -92,4 +94,11 @@ public class MazzeActivity extends AppCompatActivity {
         mEngine.stop();
     }
 
+
+    public void EndGame(Boolean win){
+        Intent myIntent = new Intent(this, EndGameActivity.class);
+        startActivityForResult(myIntent, 0);
+        myIntent.putExtra("win", win);
+        startActivity(myIntent);
+    }
 }
