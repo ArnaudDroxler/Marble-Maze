@@ -8,10 +8,9 @@ import android.graphics.Point;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 
 import java.io.FileInputStream;
@@ -61,9 +60,6 @@ public class MazzeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
         //Désactiver le mode veille
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         w1 = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, this.getClass().getName());
@@ -77,7 +73,7 @@ public class MazzeActivity extends AppCompatActivity {
 
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inScaled = false;
-        Bitmap imageToParse = BitmapFactory.decodeResource(getResources(),R.drawable.map,opts);
+        Bitmap imageToParse = BitmapFactory.decodeResource(getResources(),R.drawable.niveau_1,opts);
 
         mapWidth =  imageToParse.getWidth();
         mapHeight = imageToParse.getHeight();
@@ -88,7 +84,7 @@ public class MazzeActivity extends AppCompatActivity {
         mView = new MazzeView(this);
         setContentView(mView);
 
-        mEngine = new MazzeEngine(this);
+        mEngine = new MazzeEngine(this,getResources().getResourceEntryName(R.drawable.niveau_1));
 
         Ball ball = new Ball(ratio/2);
 
@@ -117,12 +113,10 @@ public class MazzeActivity extends AppCompatActivity {
         mEngine.stop();
     }
 
-
-    public void EndGame(Boolean win){
+    public void EndGame(Boolean win, int score){
         Intent myIntent = new Intent(this, EndGameActivity.class);
-        startActivityForResult(myIntent, 0);
         myIntent.putExtra("win", win);
-        myIntent.putExtra("score",mEngine.getScore());
+        myIntent.putExtra("score",score);
         startActivity(myIntent);
     }
 }

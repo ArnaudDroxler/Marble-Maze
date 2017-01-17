@@ -33,7 +33,7 @@ public class EndGameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         boolean win = intent.getBooleanExtra("win",true);
         String winStr = win ? "Win" : "Lose";
-        String score = intent.getStringExtra("score");
+        int score = intent.getIntExtra("score",0);
         String scoreStr = "Score : " + score;
 
         textEnd = (TextView) findViewById(R.id.textEnd);
@@ -61,6 +61,6 @@ public class EndGameActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-        
+
     }
 }
