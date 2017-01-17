@@ -286,4 +286,7 @@ public class MazzeEngine {
 
         return blocks;
     }
+    public String getScore(){
+        return scoreNiveau;
+    }
 }
