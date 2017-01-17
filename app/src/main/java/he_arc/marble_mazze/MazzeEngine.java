@@ -37,21 +37,25 @@ public class MazzeEngine {
     private List<Block> blocks = null;
     private Vibrator vibrator;
     private Context ctx;
+    private long time;
+    private int score;
 
     //On enregistre la réussite du niveau et le nombre de vie restante
     private String content ="";
     private String nomNiveau = "NomNiveau";
-    private String scoreNiveau = "1";
-    private long startTime;
 
-    public MazzeEngine(MazzeActivity mActivity) {
+
+
+    public MazzeEngine(MazzeActivity mActivity,String levelName) {
         this.mActivity = mActivity;
         mManager = (SensorManager) mActivity.getBaseContext().getSystemService(Service.SENSOR_SERVICE);
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        time = System.currentTimeMillis();
+        score = 0;
+        nomNiveau = levelName;
         vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
         this.ctx = mActivity.getApplicationContext();
-        startTime = System.currentTimeMillis();
     }
 
 
@@ -155,9 +159,11 @@ public class MazzeEngine {
                             case START:
                                 break;
                             case END:
-                                mActivity.EndGame(true);
                                 Log.i("MazzeEngine","Gagne");
-                                scoreNiveau = "" +(System.currentTimeMillis() - startTime) * ball.vie;
+
+                                time = System.currentTimeMillis() - time;
+                                score = ball.vie * (int)(-time + 100000);
+
                                 //Récupération du fichier de sauvegarde
                                 try {
                                     FileInputStream fin = ctx.openFileInput("MM_save");
@@ -173,8 +179,6 @@ public class MazzeEngine {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                Log.i("content", content);
-                                Log.i("ScoreNiveau", scoreNiveau);
                                 //Séparation de la string: 1 token par niveau
                                 StringTokenizer tokensNiveaux = new StringTokenizer(content, "|");
                                 content="";
@@ -183,7 +187,6 @@ public class MazzeEngine {
                                 while(tokensNiveaux.hasMoreTokens())
                                 {
                                     String thisTokenNiveau = tokensNiveaux.nextToken();
-                                    Log.i("token:",thisTokenNiveau);
                                     //Pour chaque niveau, on va séparer le nom du score
                                     StringTokenizer tokensDonneesNiveauActuel = new StringTokenizer(thisTokenNiveau, "/");
                                     String thisNomNiveau = tokensDonneesNiveauActuel.nextToken();
@@ -193,9 +196,9 @@ public class MazzeEngine {
                                         //On signale qu'on a trouvé le niveau
                                         modif = true;
                                         //Si le score précédent est moins bon
-                                        if (Integer.parseInt(thisScoreNiveau) < Integer.parseInt(scoreNiveau)) {
+                                        if (Integer.parseInt(thisScoreNiveau) < score) {
                                             //On remplace le résultat par le nouveau score
-                                            thisScoreNiveau = scoreNiveau;
+                                            thisScoreNiveau = score + "";
 
                                         }
                                     }
@@ -206,11 +209,11 @@ public class MazzeEngine {
                                 if(modif == false)
                                 {
                                     //Si aucune valeur trouvée, on crée une nouvelle entrée
-                                    content += (nomNiveau+"/"+scoreNiveau+"|");
+                                    content += (nomNiveau+"/"+score+"|");
                                 }
 
                                 //Ajout de la string au reste du fichier
-                                Log.i("content", "Ajout de la String: " +content);
+
                                 //Ecriture de la sauvegarde
                                 try {
                                     FileOutputStream fos = ctx.openFileOutput("MM_save", Context.MODE_PRIVATE);
@@ -222,6 +225,14 @@ public class MazzeEngine {
                                     e.printStackTrace();
                                 }
                                 content ="";
+
+                                //Pour debug
+                                /*scoreNiveau = (Integer.parseInt(scoreNiveau)+1)+"";
+                                if(scoreNiveau.equals("3")){
+                                    setNomNiveau("niveau2");
+                                }*/
+
+                                mActivity.EndGame(true,score);
                                 ball.reset();
                                 break;
                         }
@@ -230,7 +241,8 @@ public class MazzeEngine {
                 }
                if(ball.vie == 0){
                    Log.i("MazzeEngine","Perdu");
-                   mActivity.EndGame(false);
+                   score = 0;
+                   mActivity.EndGame(false,score);
                }
            }
         }
@@ -280,4 +292,5 @@ public class MazzeEngine {
 
         return blocks;
     }
+
 }
