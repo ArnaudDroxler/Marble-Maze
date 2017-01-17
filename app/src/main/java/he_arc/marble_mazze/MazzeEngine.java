@@ -42,6 +42,7 @@ public class MazzeEngine {
     private String content ="";
     private String nomNiveau = "NomNiveau";
     private String scoreNiveau = "1";
+    private long startTime;
 
     public MazzeEngine(MazzeActivity mActivity) {
         this.mActivity = mActivity;
@@ -50,6 +51,7 @@ public class MazzeEngine {
 
         vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
         this.ctx = mActivity.getApplicationContext();
+        startTime = System.currentTimeMillis();
     }
 
 
@@ -155,6 +157,7 @@ public class MazzeEngine {
                             case END:
                                 mActivity.EndGame(true);
                                 Log.i("MazzeEngine","Gagne");
+                                scoreNiveau = "" +(System.currentTimeMillis() - startTime) * ball.vie;
                                 //Récupération du fichier de sauvegarde
                                 try {
                                     FileInputStream fin = ctx.openFileInput("MM_save");
@@ -219,15 +222,6 @@ public class MazzeEngine {
                                     e.printStackTrace();
                                 }
                                 content ="";
-
-
-                                //Pour debug
-                                scoreNiveau = (Integer.parseInt(scoreNiveau)+1)+"";
-                                if(scoreNiveau.equals("3")){
-                                    setNomNiveau("niveau2");
-                                }
-
-
                                 ball.reset();
                                 break;
                         }
