@@ -1,18 +1,11 @@
 package he_arc.marble_mazze;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.PowerManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class EndGameActivity extends AppCompatActivity {
@@ -36,18 +29,18 @@ public class EndGameActivity extends AppCompatActivity {
         int score = intent.getIntExtra("score",0);
         String scoreStr = "Score : " + score;
 
-        textEnd = (TextView) findViewById(R.id.textEnd);
+        textEnd = (TextView) findViewById(R.id.textMenu);
         textEnd.setText(winStr);
 
-        textScore = (TextView) findViewById(R.id.textScore);
+        textScore = (TextView) findViewById(R.id.textNomNiveau);
         textScore.setText(scoreStr);
 
-        buttonMenu = (Button) findViewById(R.id.buttonMenu);
+        buttonMenu = (Button) findViewById(R.id.buttonStart1);
         buttonMenu.setText("Menu");
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(EndGameActivity.this, MazzeActivity.class);
+                Intent myIntent = new Intent(EndGameActivity.this, MenuActivity.class);
                 startActivity(myIntent);
             }
         });
