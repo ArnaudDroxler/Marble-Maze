@@ -19,10 +19,10 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
     private List<Block> blocks = null;
 
 
-    SurfaceHolder mSurfaceHolder;
-    DrawingThread mThread;
+    private  SurfaceHolder mSurfaceHolder;
+    private DrawingThread mThread;
 
-    Paint mPaint;
+    private Paint mPaint;
     private List<Block> Blocks = null;
 
 
@@ -31,8 +31,11 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
+
+        //On declare un Thread pour afficher et dessine le jeux
         mThread = new DrawingThread();
 
+        //On declare le pinceau pour dessiner
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
 
@@ -46,17 +49,8 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
         this.blocks = blocks;
     }
 
-    public List<Block> getBlocks() {
-        return blocks;
-    }
-
-    public Ball getBoule() {
-        return ball;
-    }
-
-
     public void draw(Canvas pCanvas) {
-        // Dessiner le fond de l'�cran en premier
+        // Dessiner le fond de l'ecran en premier
         pCanvas.drawColor(Color.CYAN);
         if(blocks != null) {
             // Dessiner tous les blocs du labyrinthe
@@ -83,6 +77,7 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
             mPaint.setColor(ball.getColor());
             pCanvas.drawCircle(ball.getX(), ball.getY(), ball.RAYON, mPaint);
         }
+        //Dessiner les points de vie
         mPaint.setColor(Color.RED);
         for (int i = 0; i<ball.vie; i++){
             pCanvas.drawCircle(50,getHeight()-50-i*80,40,mPaint);
@@ -139,6 +134,7 @@ public class MazzeView  extends SurfaceView implements SurfaceHolder.Callback {
                 }
 
                 try {
+                    //60fps
                     Thread.sleep(20);
                 } catch (InterruptedException e) {}
             }

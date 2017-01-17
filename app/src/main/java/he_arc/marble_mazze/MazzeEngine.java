@@ -42,18 +42,22 @@ public class MazzeEngine {
 
     //On enregistre la réussite du niveau et le nombre de vie restante
     private String content ="";
-    private String nomNiveau = "NomNiveau";
+    private String nomNiveau;
 
     public MazzeEngine(MazzeActivity mActivity,String levelName) {
         this.mActivity = mActivity;
+
+        //Recupere le service pour avoir l accelerometre
         mManager = (SensorManager) mActivity.getBaseContext().getSystemService(Service.SENSOR_SERVICE);
         mAccelerometre = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         time = System.currentTimeMillis();
         score = 0;
         nomNiveau = levelName;
+
+        //Recupere le service pour la vibration
         vibrator = (Vibrator) mActivity.getSystemService(mActivity.VIBRATOR_SERVICE);
-        this.ctx = mActivity.getApplicationContext();
+        ctx = mActivity.getApplicationContext();
     }
 
 
@@ -66,14 +70,17 @@ public class MazzeEngine {
             float z = pEvent.values[2];
 
            if (ball != null) {
+               //update la position de la ball
                 RectF hitBox = ball.putXAndY(x,y);
 
+               //Pour chaque block on test l intersection avec la ball
                 for (Block block : blocks) {
-
                     RectF inter = new RectF(block.getRectangle());
                     if (inter.intersect(hitBox)) {
+                        //On fonction du type on realise des traitement different
                         switch (block.getType()) {
                             case WALL:
+                                //Vibration de 50 ms
                                 vibrator.vibrate(50);
                                 if((inter.right-inter.left)<(inter.bottom-inter.top)){
                                     ball.rebondY();
@@ -159,6 +166,7 @@ public class MazzeEngine {
                             case END:
                                 Log.i("MazzeEngine","Gagne");
 
+                                //Calcule du temps et du score
                                 time = System.currentTimeMillis() - time;
                                 score = ball.vie * (int)(-time + 100000);
 
@@ -169,7 +177,6 @@ public class MazzeEngine {
                                     while( (c = fin.read()) != -1){
                                         content += Character.toString((char)c);
                                     }
-
                                     //string temp contains all the data of the file.
                                     fin.close();
                                 } catch (FileNotFoundException e) {
@@ -224,13 +231,13 @@ public class MazzeEngine {
                                 }
                                 content ="";
 
-
                                 //Pour debug
                                 /*scoreNiveau = (Integer.parseInt(scoreNiveau)+1)+"";
                                 if(scoreNiveau.equals("3")){
                                     setNomNiveau("niveau2");
                                 }*/
 
+                                
                                 mActivity.EndGame(true,score);
                                 ball.reset();
                                 break;
@@ -252,20 +259,27 @@ public class MazzeEngine {
         }
     };
 
-    public void setNomNiveau(String nom){this.nomNiveau = nom;}
-
     public void setBall(Ball ball) {
         this.ball = ball;
     }
 
+    //Suppression du SensorListener
     public void stop() {
         mManager.unregisterListener(mSensorEventListener, mAccelerometre);
     }
 
+    //Ajout du SensorListener au Manager
     public void resume() {
         mManager.registerListener(mSensorEventListener, mAccelerometre, SensorManager.SENSOR_DELAY_GAME);
     }
 
+    /*
+    Fonction qui parse une image qui utilise la couleur du pixel pour definir si il s agit d une trou/mur/depart/arriver
+    Elle retourne une liste de Block qui contienne la position de chaque Block sur l ecrans
+    Parametre :
+           Bitmap imageToParse :  image a parse
+           int offset : offset defini a partir du ratio calculer dans MazzeActtivity, il permet de definir la position des block dans la sur l ecrans en respectant le ratio
+     */
     public List<Block> buildMazze(Bitmap imageToParse, int offset) {
         blocks = new ArrayList<Block>();
 

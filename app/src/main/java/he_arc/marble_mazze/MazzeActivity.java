@@ -38,6 +38,7 @@ public class MazzeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Mode fullScreen
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
 
@@ -64,6 +65,7 @@ public class MazzeActivity extends AppCompatActivity {
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         w1 = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, this.getClass().getName());
 
+        //Recupairer la taille de l ecran
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -71,6 +73,7 @@ public class MazzeActivity extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
+        //Recupairer l image du niveau pour definir les mur/trou/depart/arriver
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inScaled = false;
         Bitmap imageToParse = BitmapFactory.decodeResource(getResources(),R.drawable.niveau_1,opts);
@@ -78,19 +81,23 @@ public class MazzeActivity extends AppCompatActivity {
         mapWidth =  imageToParse.getWidth();
         mapHeight = imageToParse.getHeight();
 
+        //calcuer le ration entre la map et l ecran pour que l affichage est toujous la meme taille
         ratio = (screenHeight/mapHeight);
         offset = ( Math.abs(screenWidth - mapWidth*ratio)/2)/ratio;
 
+        //creer la View et on la set a notre activite
         mView = new MazzeView(this);
         setContentView(mView);
 
+        //creer Engine avec les nom de la map en paramrtre
         mEngine = new MazzeEngine(this,getResources().getResourceEntryName(R.drawable.niveau_1));
 
+        //creer la ball et on la set dans la View et Engine
         Ball ball = new Ball(ratio/2);
-
         mView.setBall(ball);
         mEngine.setBall(ball);
 
+        //creer le niveau a partir de l image
         List<Block> mList = mEngine.buildMazze(imageToParse,offset);
         mView.setBlocks(mList);
     }
@@ -113,6 +120,12 @@ public class MazzeActivity extends AppCompatActivity {
         mEngine.stop();
     }
 
+    /*
+    Fonction de fin de jeux appelle par Engine permet de passe a l activity EndGameActivity
+    parametre :
+        boolean win : true si le jeux est gagne
+        int score   : score resaliser dans la partie
+     */
     public void EndGame(Boolean win, int score){
         Intent myIntent = new Intent(this, EndGameActivity.class);
         myIntent.putExtra("win", win);
