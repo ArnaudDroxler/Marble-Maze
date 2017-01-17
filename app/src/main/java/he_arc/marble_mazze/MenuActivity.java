@@ -36,7 +36,7 @@ public class MenuActivity extends AppCompatActivity {
 
         textScoreNiveau1 = (TextView) findViewById(R.id.textScoreNiveau1);
         textNomNiveau1.setText("0");
-
+        ctx = getApplicationContext();
         //Récupération du fichier de sauvegarde
         try {
             FileInputStream fin = ctx.openFileInput("MM_save");
@@ -63,15 +63,13 @@ public class MenuActivity extends AppCompatActivity {
             String thisScoreNiveau = tokensDonneesNiveauActuel.nextToken();
             //Si on analyse le score de ce niveau là
             if(thisNomNiveau.equals(textNomNiveau1.getText())) {
-                textScoreNiveau1.setText("Score : "+thisScoreNiveau);
+                textScoreNiveau1.setText("Score : "+ thisScoreNiveau);
             }
         }
-
-
-        Intent intent = getIntent();
-
+        
         buttonStart1 = (Button) findViewById(R.id.buttonStart1);;
         buttonStart1.setText("Start");
+
         buttonStart1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
