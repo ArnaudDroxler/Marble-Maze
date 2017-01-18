@@ -30,6 +30,7 @@ public class MazzeActivity extends AppCompatActivity {
     private int mapHeight;
     private int offset;
     private int ratio;
+    private int level;
 
     //désactiver mise en veille
     private PowerManager.WakeLock w1;
@@ -41,6 +42,8 @@ public class MazzeActivity extends AppCompatActivity {
         //Mode fullScreen
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
+        //On recupaire le paramtre passe de menuActivity
+        level = getIntent().getIntExtra("level",0);
 
         try {
             //essaye d'ouvrir le fichier de sauvegarde du programme
@@ -76,7 +79,7 @@ public class MazzeActivity extends AppCompatActivity {
         //Recupairer l image du niveau pour definir les mur/trou/depart/arriver
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inScaled = false;
-        Bitmap imageToParse = BitmapFactory.decodeResource(getResources(),R.drawable.niveau_1,opts);
+        Bitmap imageToParse = BitmapFactory.decodeResource(getResources(),level,opts);
 
         mapWidth =  imageToParse.getWidth();
         mapHeight = imageToParse.getHeight();
@@ -90,7 +93,7 @@ public class MazzeActivity extends AppCompatActivity {
         setContentView(mView);
 
         //creer Engine avec les nom de la map en paramrtre
-        mEngine = new MazzeEngine(this,getResources().getResourceEntryName(R.drawable.niveau_1));
+        mEngine = new MazzeEngine(this,getResources().getResourceEntryName(level));
 
         //creer la ball et on la set dans la View et Engine
         Ball ball = new Ball(ratio/2);

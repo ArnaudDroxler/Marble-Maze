@@ -21,6 +21,12 @@ public class MenuActivity extends AppCompatActivity {
     private TextView textNomNiveau1;
     private TextView textScoreNiveau1;
     private Button buttonStart1;
+    private TextView textNomNiveau2;
+    private TextView textScoreNiveau2;
+    private Button buttonStart2;
+    private TextView textNomNiveau3;
+    private TextView textScoreNiveau3;
+    private Button buttonStart3;
     private Context ctx;
     private String content ="";
 
@@ -31,11 +37,27 @@ public class MenuActivity extends AppCompatActivity {
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
+        textMenu = (TextView) findViewById(R.id.textMenu);
+        textMenu.setText("Choix du niveau");
+
         textNomNiveau1 = (TextView) findViewById(R.id.textNomNiveau1);
-        textNomNiveau1.setText("Niveau1");
+        textNomNiveau1.setText("Niveau 1");
 
         textScoreNiveau1 = (TextView) findViewById(R.id.textScoreNiveau1);
-        textNomNiveau1.setText("0");
+        textScoreNiveau1.setText("Score : 0");
+
+        textNomNiveau2 = (TextView) findViewById(R.id.textNomNiveau2);
+        textNomNiveau2.setText("Niveau 2");
+
+        textScoreNiveau2 = (TextView) findViewById(R.id.textScoreNiveau2);
+        textScoreNiveau2.setText("Score : 0");
+
+        textNomNiveau3 = (TextView) findViewById(R.id.textNomNiveau3);
+        textNomNiveau3.setText("Niveau 3");
+
+        textScoreNiveau3 = (TextView) findViewById(R.id.textScoreNiveau3);
+        textScoreNiveau3.setText("Score : 0");
+
         ctx = getApplicationContext();
         //Récupération du fichier de sauvegarde
         try {
@@ -62,11 +84,17 @@ public class MenuActivity extends AppCompatActivity {
             String thisNomNiveau = tokensDonneesNiveauActuel.nextToken();
             String thisScoreNiveau = tokensDonneesNiveauActuel.nextToken();
             //Si on analyse le score de ce niveau là
-            if(thisNomNiveau.equals(textNomNiveau1.getText())) {
+            if(thisNomNiveau.equals("niveau_1")) {
                 textScoreNiveau1.setText("Score : "+ thisScoreNiveau);
             }
+            if(thisNomNiveau.equals("niveau_2")) {
+                textScoreNiveau2.setText("Score : "+ thisScoreNiveau);
+            }
+            if(thisNomNiveau.equals("niveau_3")) {
+                textScoreNiveau3.setText("Score : "+ thisScoreNiveau);
+            }
         }
-        
+
         buttonStart1 = (Button) findViewById(R.id.buttonStart1);;
         buttonStart1.setText("Start");
 
@@ -74,9 +102,35 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(MenuActivity.this, MazzeActivity.class);
+                myIntent.putExtra("level", R.drawable.niveau_1);
                 startActivity(myIntent);
             }
         });
+
+        buttonStart2 = (Button) findViewById(R.id.buttonStart2);;
+        buttonStart2.setText("Start");
+
+        buttonStart2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MenuActivity.this, MazzeActivity.class);
+                myIntent.putExtra("level", R.drawable.niveau_2);
+                startActivity(myIntent);
+            }
+        });
+
+        buttonStart3 = (Button) findViewById(R.id.buttonStart3);
+        buttonStart3.setText("Start");
+
+        buttonStart3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MenuActivity.this, MazzeActivity.class);
+                myIntent.putExtra("level", R.drawable.niveau_3);
+                startActivity(myIntent);
+            }
+        });
+
 
     }
 }
