@@ -15,6 +15,7 @@ public class EndGameActivity extends AppCompatActivity {
     private TextView textScore;
     private Button buttonRetry;
     private TextView buttonMenu;
+    private int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class EndGameActivity extends AppCompatActivity {
         String winStr = win ? "Win" : "Lose";
         int score = intent.getIntExtra("score",0);
         String scoreStr = "Score : " + score;
+        level = getIntent().getIntExtra("level",0);
 
         textEnd = (TextView) findViewById(R.id.textMenu);
         textEnd.setText(winStr);
@@ -51,6 +53,7 @@ public class EndGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(EndGameActivity.this, MazzeActivity.class);
+                myIntent.putExtra("level", level);
                 startActivity(myIntent);
             }
         });

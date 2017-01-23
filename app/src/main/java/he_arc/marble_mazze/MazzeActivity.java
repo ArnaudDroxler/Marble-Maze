@@ -133,6 +133,7 @@ public class MazzeActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, EndGameActivity.class);
         myIntent.putExtra("win", win);
         myIntent.putExtra("score",score);
+        myIntent.putExtra("level",level);
         startActivity(myIntent);
     }
 }
